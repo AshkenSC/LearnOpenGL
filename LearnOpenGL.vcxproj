@@ -124,6 +124,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opengl\src\glad.c" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="vShader.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
