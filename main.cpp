@@ -6,6 +6,10 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+
 /* vertex shader */
 // vertex shader code is stored as a STRING
 const char *vertexShaderSource = "#version 330 core\n"
@@ -39,7 +43,7 @@ int main() {
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	// create a window object
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -183,84 +187,13 @@ void processInput(GLFWwindow *window)
 		glfwSetWindowShouldClose(window, true);
 }
 
-// TODO ------------------------------
-
-	// create a Vertex Buffer Object(VBO) and a Vertex Array Object(VAO)
-	unsigned int VBO, VAO;
-	glGenBuffers(1, &VBO);
-	glGenVertexArrays(1, &VAO);
-	// bind VAO
-	glBindVertexArray(VAO);
-
-	// bind VBO to GL_ARRAY_BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);	
-	// copy vertices data to memory of the buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	
-	
-
-	// compile fragment shader
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	// create a shader program object
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-	// add shaders to the shader program, and link them using glLinkProgram
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	// pass shaderProgram as parameter; activate this program object
-	glUseProgram(shaderProgram);
-	// delete the used shaders
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-	// tell OpenGL how to resolve vertices data
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// 
-
-
-	// call glViewport to set dimension of the window(window size)
-	glViewport(0, 0, 800, 600);
-	// call this function every time window size is adjusted 
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-	// RENDER LOOP
-	while (!glfwWindowShouldClose(window))
-	{
-		/* keyboard input process function */
-		processInput(window);
-		
-		/* render commands */
-		glClearColor(0.7f, 0.3f, 0.6f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		/* check and call events, swap buffer */
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
-
-	// terminate program
-	glfwTerminate();
-	return 0;
-}
-
-
-// Every time the window size is changed, viewport should be changed as well.
-// This function will be called everytime the window size is adjusted.
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+	// make sure the viewport matches the new window dimensions; note that width and 
+	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
 
-// The function to process keyboard input
-void processInput(GLFWwindow *window)
-{
-	// check if ESC is pressed
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
+// TODO ------------------------------
