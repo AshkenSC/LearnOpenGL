@@ -14,11 +14,12 @@ const unsigned int SCR_HEIGHT = 600;
 // vertex shader
 const char *vertexShaderSource = "#version 330 core\n"
 "layout(location = 0) in vec3 aPos;\n"	// location variable attribute value = 0
-"out vec4 vertexColor;"	// set an OUTPUT for fragment shader
+"layout(location = 1) in vec3 aPos;\n"	// color variable attribute value = 1
+"out vec3 ourColor;"	// set an OUTPUT for fragment shader
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos,  1.0);\n"	// use vec3 as vec4 constructor's parameter
-"	vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n"	// set output variable to deep red
+"	ourColor = aColor\n"	// set output variable to deep red
 "}\n";
 
 // fragment shader
