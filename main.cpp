@@ -19,7 +19,7 @@ const char *vertexShaderSource = "#version 330 core\n"
 "void main()\n"
 "{\n"
 "	gl_Position = vec4(aPos,  1.0);\n"	// use vec3 as vec4 constructor's parameter
-"	ourColor = aColor\n"	// set output variable to deep red
+"	ourColor = aColor;\n"	// set output variable to deep red
 "}\n";
 
 // fragment shader
