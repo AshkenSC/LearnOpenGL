@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "shader.h"
+
 /* function prototypes */
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -9,29 +11,6 @@ void processInput(GLFWwindow *window);
 /* settings */
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-// codes of shaders are stored as STRINGs
-// vertex shader
-const char *vertexShaderSource = "#version 330 core\n"
-"layout(location = 0) in vec3 aPos;\n"	// location variable attribute value = 0
-"layout(location = 1) in vec3 aPos;\n"	// color variable attribute value = 1
-"out vec3 ourColor;"	// set an OUTPUT for fragment shader
-"void main()\n"
-"{\n"
-"	gl_Position = vec4(aPos,  1.0);\n"	// use vec3 as vec4 constructor's parameter
-"	ourColor = aColor;\n"	// set output variable to deep red
-"}\n";
-
-// fragment shader
-const char *fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-//"in vec4 vertexColor;\n"
-"in vec3 ourColor;\n"
-"void main()\n"
-"{\n"
-"	FragColor = vec4(ourColor, 1.0);\n"
-"}\n";
-
 
 int main() {
 	// GLFW initialization
@@ -61,7 +40,7 @@ int main() {
 	}
 
 	// compile vertex shader
-	unsigned int vertexShader;
+	/*unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
@@ -98,6 +77,11 @@ int main() {
 	}
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	*/
+
+	// build and compile our shader program
+	// ------------------------------------
+	Shader ourShader("shader.vs", "shader.fs");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -164,7 +148,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// activate shader program
-		glUseProgram(shaderProgram);
+		//glUseProgram(shaderProgram);
 
 		// update uniform color
 		float timeValue = glfwGetTime();
@@ -173,6 +157,7 @@ int main() {
 		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
 		// draw a triangle
+		ourShader.use();
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
