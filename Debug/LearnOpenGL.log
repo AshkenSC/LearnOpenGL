@@ -1,3 +1,4 @@
 ﻿  main.cpp
 d:\project\opengl\learnopengl\shader.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  LearnOpenGL.vcxproj -> D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe
+d:\project\opengl\learnopengl\main.cpp(154): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(156): error C2065: 'shaderProgram': undeclared identifier
