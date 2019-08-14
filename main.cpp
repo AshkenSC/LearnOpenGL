@@ -48,5 +48,9 @@ int main()
 		return -1;
 	}
 
+	// build and compile our shader zprogram
+	// ------------------------------------
+	Shader ourShader("4.1.texture.vs", "4.1.texture.fs");
+
 	return 0;
 }
