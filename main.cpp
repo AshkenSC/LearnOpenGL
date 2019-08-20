@@ -114,5 +114,32 @@ int main()
 	}
 	stbi_image_free(data);
 
+	// render loop
+	// -----------
+	while (!glfwWindowShouldClose(window))
+	{
+		// input
+		// -----
+		processInput(window);
+
+		// render
+		// ------
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// bind Texture
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		// render container
+		ourShader.use();
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+		// -------------------------------------------------------------------------------
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
 	return 0;
 }
