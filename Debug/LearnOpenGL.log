@@ -1,3 +1,13 @@
-﻿  main.cpp
+﻿  stb_image.cpp
+  main_shader.cpp0
 d:\project\opengl\learnopengl\shader.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  LearnOpenGL.vcxproj -> D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe
+  main.cpp
+d:\project\opengl\learnopengl\shader.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+  glad.c
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  d:\project\opengl\learnopengl\opengl\include\glad\glad.h(32): note: see previous definition of 'APIENTRY'
+main_shader.obj : error LNK2005: "void __cdecl framebuffer_size_callback(struct GLFWwindow *,int,int)" (?framebuffer_size_callback@@YAXPAUGLFWwindow@@HH@Z) already defined in main.obj
+main_shader.obj : error LNK2005: "void __cdecl processInput(struct GLFWwindow *)" (?processInput@@YAXPAUGLFWwindow@@@Z) already defined in main.obj
+main_shader.obj : error LNK2005: _main already defined in main.obj
+D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe : fatal error LNK1169: one or more multiply defined symbols found
