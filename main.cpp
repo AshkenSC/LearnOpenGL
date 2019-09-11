@@ -91,7 +91,7 @@ int main()
 	// load and create a texture 
 	// -------------------------
 	unsigned int texture1, texture2;
-	// texture 1
+	// texture 
 	// ---------
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
@@ -147,7 +147,7 @@ int main()
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	// or set it via the texture class
 	ourShader.setInt("texture2", 1);
-	// set an offset value to move the shape in vertex shader
+	// set an offset value to move the shape using vertex shader
 	float offset = 0.5f;
 	ourShader.setFloat("xOffset", offset);
 
