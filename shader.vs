@@ -10,7 +10,7 @@ uniform float xOffset;
 
 void main()
 {
-	gl_Position = vec4(aPos.x + xOffset, aPos.y, aPos.z, 1.0); // add the xOffset to the x position of the vertex position
+	gl_Position = vec4(aPos.x + xOffset, aPos.y, aPos.z, 1.0);
 	//gl_Position = vec4(aPos,  1.0);	// use vec3 as vec4 constructor's parameter
 	ourColor = aColor;		
 	TexCoord = vec2(aTexCoord.x, aTexCoord.y);

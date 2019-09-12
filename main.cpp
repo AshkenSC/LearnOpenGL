@@ -56,10 +56,10 @@ int main()
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// positions          // colors           // texture coords (MODIFIED IN PRACTICE 2)
-		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   2.0f, 2.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   2.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 2.0f  // top left 
+		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   0.27f, 0.27f, // top right
+		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   0.27f, 0.25f, // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.25f, 0.25f, // bottom left
+		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.25f, 0.27f  // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -99,8 +99,8 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// load image, create texture and generate mipmaps
 	int width, height, nrChannels;
 	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
@@ -121,11 +121,11 @@ int main()
 	glGenTextures(1, &texture2);
 	glBindTexture(GL_TEXTURE_2D, texture2);
 	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// load image, create texture and generate mipmaps
 	data = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
 	if (data)
@@ -148,7 +148,7 @@ int main()
 	// or set it via the texture class
 	ourShader.setInt("texture2", 1);
 	// set an offset value to move the shape using vertex shader
-	float offset = 0.5f;
+	float offset = 0.314f;
 	ourShader.setFloat("xOffset", offset);
 
 	// render loop
