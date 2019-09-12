@@ -55,11 +55,11 @@ int main()
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	float vertices[] = {
-		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   1.0f, 0.0f, // bottom right
+		// positions          // colors           // texture coords (MODIFIED IN PRACTICE 2)
+		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   2.0f, 2.0f, // top right
+		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   2.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
+		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 2.0f  // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -91,7 +91,7 @@ int main()
 	// load and create a texture 
 	// -------------------------
 	unsigned int texture1, texture2;
-	// texture 
+	// texture 1
 	// ---------
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
