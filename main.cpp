@@ -56,10 +56,10 @@ int main()
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// positions          // colors           // texture coords (MODIFIED IN PRACTICE 2)
-		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   0.27f, 0.27f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   0.27f, 0.25f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.25f, 0.25f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.25f, 0.27f  // top left 
+		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   1.0f, 1.0f, // top right
+		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.0f, 0.0f, // bottom left
+		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -150,6 +150,9 @@ int main()
 	// set an offset value to move the shape using vertex shader
 	float offset = 0.314f;
 	ourShader.setFloat("xOffset", offset);
+	// PRACTICE 3: set a uniform value to modify texture transparency
+	float texTrans = 0.5;
+	ourShader.setFloat("texTrans", texTrans);
 
 	// render loop
 	// -----------
