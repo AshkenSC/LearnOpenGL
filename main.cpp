@@ -15,6 +15,9 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// PRACTICE 3: set a uniform value to modify texture transparency
+float texTrans = 0.5;
+
 int main()
 {
 	// glfw: initialize and configure
@@ -151,7 +154,6 @@ int main()
 	float offset = 0.314f;
 	ourShader.setFloat("xOffset", offset);
 	// PRACTICE 3: set a uniform value to modify texture transparency
-	float texTrans = 0.5;
 	ourShader.setFloat("texTrans", texTrans);
 
 	// render loop
@@ -203,6 +205,20 @@ void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	
+	//
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		texTrans += 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		if (texTrans >= 1.0f)
+			texTrans = 1.0f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		texTrans -= 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		if (texTrans <= 0.0f)
+			texTrans = 0.0f;
+	}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
