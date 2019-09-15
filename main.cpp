@@ -16,7 +16,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // PRACTICE 3: set a uniform value to modify texture transparency
-float texTrans = 0.5;
+float texTrans = 0.2;
 
 int main()
 {
@@ -209,15 +209,17 @@ void processInput(GLFWwindow *window)
 	//
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		texTrans += 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		texTrans += 0.1f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans >= 1.0f)
 			texTrans = 1.0f;
+		cout << "transparency down" << endl;
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		texTrans -= 0.001f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		texTrans -= 0.1f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans <= 0.0f)
 			texTrans = 0.0f;
+		cout << "transparency up" << endl;
 	}
 }
 
