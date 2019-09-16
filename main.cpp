@@ -16,7 +16,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // PRACTICE 3: set a uniform value to modify texture transparency
-float texTrans = 0.2;
+float texTrans = 0.5;
 
 int main()
 {
@@ -153,8 +153,7 @@ int main()
 	// set an offset value to move the shape using vertex shader
 	float offset = 0.314f;
 	ourShader.setFloat("xOffset", offset);
-	// PRACTICE 3: set a uniform value to modify texture transparency
-	ourShader.setFloat("texTrans", texTrans);
+	
 
 	// render loop
 	// -----------
@@ -174,6 +173,9 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, texture1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
+
+		// PRACTICE 3: set a uniform value to modify texture transparency
+		ourShader.setFloat("texTrans", texTrans);
 
 		// render container
 		ourShader.use();
@@ -209,17 +211,17 @@ void processInput(GLFWwindow *window)
 	//
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		texTrans += 0.1f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		texTrans += 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans >= 1.0f)
 			texTrans = 1.0f;
-		cout << "transparency down" << endl;
+		cout << "transparency: " << texTrans << endl;
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		texTrans -= 0.1f; // change this value accordingly (might be too slow or too fast based on system hardware)
+		texTrans -= 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans <= 0.0f)
 			texTrans = 0.0f;
-		cout << "transparency up" << endl;
+		cout << "transparency: " << texTrans << endl;
 	}
 }
 

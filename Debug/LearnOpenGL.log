@@ -1,3 +1,2 @@
 ﻿  main.cpp
-d:\project\opengl\learnopengl\main.cpp(19): warning C4305: 'initializing': truncation from 'double' to 'float'
   LearnOpenGL.vcxproj -> D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe
