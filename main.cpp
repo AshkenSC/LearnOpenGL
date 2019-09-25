@@ -201,8 +201,11 @@ int main()
 		ourShader.setFloat("texTrans", texTrans);
 
 		// render container
-		ourShader.use();
-		glBindVertexArray(VAO);
+		//ourShader.use();
+		//glBindVertexArray(VAO);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
+		// now with the uniform matrix being replaced with new transformations, draw it again.
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
