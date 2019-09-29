@@ -181,7 +181,11 @@ int main()
 		// create a model matrix
 		glm::mat4 model;
 		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		// TODO
+		// create a view matrix
+		glm::mat4 view;
+		// NOTE: we move the matrix in the reverse direction
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
 
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		// TRANSFORMATION PRACTICE 2: first container
