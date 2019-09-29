@@ -185,7 +185,9 @@ int main()
 		glm::mat4 view;
 		// NOTE: we move the matrix in the reverse direction
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
+		// create a projection matrix
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), float(800.0 / 600.0), 0.1f, 100.0f);
 
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		// TRANSFORMATION PRACTICE 2: first container
