@@ -150,7 +150,7 @@ int main()
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
 	ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
-					 // either set it manually like so:
+	// either set it manually like so:
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	// or set it via the texture class
 	ourShader.setInt("texture2", 1);
@@ -178,18 +178,19 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		// create a model matrix
-		glm::mat4 model;
+		// create transformation matrices
+		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		// create a view matrix
-		glm::mat4 view;
-		// NOTE: we move the matrix in the reverse direction
+		glm::mat4 view = glm::mat4(1.0f);
+		// NOTE: the matrix is moved in the reverse direction
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		// create a projection matrix
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), float(800.0 / 600.0), 0.1f, 100.0f);
-
+		glm::mat4 projection = glm::mat4(1.0f);
+		projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		// retrieve the matrix uniform locations
+		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+
 		// TRANSFORMATION PRACTICE 2: first container
 		// ---------------------
 		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
@@ -200,6 +201,11 @@ int main()
 		// with the uniform matrix set, draw the first container
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// pass them to the shaders (3 different ways)
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+		ourShader.setMat4("projection", projection);
 
 		// TRANSFORMATION PRACTICE 2: second transformation
 		// ---------------------
@@ -211,11 +217,6 @@ int main()
 
 		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
 		ourShader.setFloat("texTrans", texTrans);
-
-		// render container
-		//ourShader.use();
-		//glBindVertexArray(VAO);
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 		// now with the uniform matrix being replaced with new transformations, draw it again.
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
