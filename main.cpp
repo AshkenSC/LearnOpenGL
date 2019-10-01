@@ -190,6 +190,7 @@ int main()
 		// retrieve the matrix uniform locations
 		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
 		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+		// TODO
 
 		// TRANSFORMATION PRACTICE 2: first container
 		// ---------------------
