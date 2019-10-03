@@ -110,7 +110,7 @@ int main()
 		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-	};	// TODO
+	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
@@ -214,6 +214,10 @@ int main()
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// TODO COORDINATE
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// bind textures on corresponding texture units
 		glActiveTexture(GL_TEXTURE0);
