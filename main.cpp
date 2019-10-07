@@ -55,6 +55,9 @@ int main()
 		return -1;
 	}
 
+	// COORDINATE: configure global opengl state
+	glEnable(GL_DEPTH_TEST);
+
 	// build and compile our shader zprogram
 	// ------------------------------------
 	Shader ourShader("shader.vs", "shader.fs");
@@ -213,10 +216,7 @@ int main()
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// TODO COORDINATE
-		glEnable(GL_DEPTH_TEST);
+		//glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// bind textures on corresponding texture units
