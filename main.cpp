@@ -132,10 +132,11 @@ int main()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	// TODO
 	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	// texture coord attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
@@ -216,7 +217,6 @@ int main()
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// bind textures on corresponding texture units
@@ -225,14 +225,19 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
+		// activate shader
+		ourShader.use();
+
 		// create transformation matrices
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+		
 		glm::mat4 view = glm::mat4(1.0f);
-		// NOTE: the matrix is moved in the reverse direction
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		
 		glm::mat4 projection = glm::mat4(1.0f);
 		projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
+		
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		// retrieve the matrix uniform locations
 		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
@@ -245,16 +250,16 @@ int main()
 		// get matrix's uniform location and set matrix
 		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-		// with the uniform matrix set, draw the first container
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);	// draw a cube
-		// TODO
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		
 		// pass them to the shaders (3 different ways)
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		ourShader.setMat4("projection", projection);
+
+		// with the uniform matrix set, draw the first container
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);	// draw a cube
 
 		// TRANSFORMATION PRACTICE 2: second transformation
 		// ---------------------
@@ -268,7 +273,8 @@ int main()
 		ourShader.setFloat("texTrans", texTrans);
 		
 		// now with the uniform matrix being replaced with new transformations, draw it again.
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
