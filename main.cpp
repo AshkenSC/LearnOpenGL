@@ -21,6 +21,10 @@ const unsigned int SCR_HEIGHT = 600;
 
 // TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
 float texTrans = 0.5;
+// COORDINATE PRACTICE 2: camera location offset
+float xOffset = 0.0;
+float yOffset = 0.0;
+float zOffset = 0.0;
 
 int main()
 {
@@ -238,72 +242,70 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		// activate shader
-		ourShader.use();
+// activate shader
+ourShader.use();
 
-		// create transformation matrices
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-		
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		
-		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
-		
-		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		// retrieve the matrix uniform locations
-		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+// create transformation matrices
+glm::mat4 model = glm::mat4(1.0f);
+model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
 
-		// TRANSFORMATION PRACTICE 2: first container
-		// ---------------------
-		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-		// get matrix's uniform location and set matrix
-		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-		
-		// pass them to the shaders (3 different ways)
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-		ourShader.setMat4("projection", projection);
+glm::mat4 view = glm::mat4(1.0f);
+view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
 
-		// with the uniform matrix set, draw the first container
-		// draw MANY cubes using a FOR loop
-		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			glm::mat4 model;
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			ourShader.setMat4("model", model);
+glm::mat4 projection = glm::mat4(1.0f);
+projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-		// TODO
+glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+// retrieve the matrix uniform locations
+unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
 
-		// TRANSFORMATION PRACTICE 2: second transformation
-		// ---------------------
-		transform = glm::mat4(1.0f); // reset it to identity matrix
-		transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
-		float scaleAmount = sin(glfwGetTime());
-		transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
+// TRANSFORMATION PRACTICE 2: first container
+// ---------------------
+transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+// get matrix's uniform location and set matrix
+unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
-		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-		ourShader.setFloat("texTrans", texTrans);
-		
-		// now with the uniform matrix being replaced with new transformations, draw it again.
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+// pass them to the shaders (3 different ways)
+glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+ourShader.setMat4("projection", projection);
 
-		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-		// -------------------------------------------------------------------------------
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+// draw MANY cubes using a FOR loop
+// ---------------------
+glBindVertexArray(VAO);
+for (unsigned int i = 0; i < 10; i++)
+{
+	glm::mat4 model;
+	model = glm::translate(model, cubePositions[i]);
+	float angle = 20.0f * i;
+	model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+	ourShader.setMat4("model", model);
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+// TRANSFORMATION PRACTICE 2: second transformation
+// ---------------------
+transform = glm::mat4(1.0f); // reset it to identity matrix
+transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+float scaleAmount = sin(glfwGetTime());
+transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
+
+// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
+ourShader.setFloat("texTrans", texTrans);
+
+// now with the uniform matrix being replaced with new transformations, draw it again.
+glDrawArrays(GL_TRIANGLES, 0, 36);
+
+// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+// -------------------------------------------------------------------------------
+glfwSwapBuffers(window);
+glfwPollEvents();
 	}
 
 	// optional: de-allocate all resources once they've outlived their purpose:
@@ -325,8 +327,7 @@ void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	
-	//
+
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		texTrans += 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
@@ -340,6 +341,25 @@ void processInput(GLFWwindow *window)
 		if (texTrans <= 0.0f)
 			texTrans = 0.0f;
 		cout << "transparency: " << texTrans << endl;
+	}
+	// camera location control
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		yOffset += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		yOffset -= 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		xOffset -= 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		xOffset += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		zOffset += 0.01f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+		zOffset -= 0.01f;
 	}
 }
 
