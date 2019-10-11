@@ -342,24 +342,29 @@ void processInput(GLFWwindow *window)
 			texTrans = 0.0f;
 		cout << "transparency: " << texTrans << endl;
 	}
-	// camera location control
+	// camera movement control
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		yOffset += 0.01f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		yOffset -= 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
 		xOffset -= 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		xOffset += 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
 		zOffset += 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
 		zOffset -= 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 }
 
