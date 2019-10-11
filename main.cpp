@@ -242,70 +242,74 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-// activate shader
-ourShader.use();
+		// activate shader
+		ourShader.use();
 
-// create transformation matrices
-glm::mat4 model = glm::mat4(1.0f);
-model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+		// create transformation matrices
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
 
-glm::mat4 view = glm::mat4(1.0f);
-view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
 
-glm::mat4 projection = glm::mat4(1.0f);
-projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
+		glm::mat4 projection = glm::mat4(1.0f);
+		projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH) / float(SCR_HEIGHT), 0.1f, 100.0f);
 
-glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-// retrieve the matrix uniform locations
-unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		// retrieve the matrix uniform locations
+		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
+		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
 
-// TRANSFORMATION PRACTICE 2: first container
-// ---------------------
-transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-// get matrix's uniform location and set matrix
-unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
-glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+		// TRANSFORMATION PRACTICE 2: first container
+		// ---------------------
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		//transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		// get matrix's uniform location and set matrix
+		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
-// pass them to the shaders (3 different ways)
-glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-ourShader.setMat4("projection", projection);
+		// pass them to the shaders (3 different ways)
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+		ourShader.setMat4("projection", projection);
 
-// draw MANY cubes using a FOR loop
-// ---------------------
-glBindVertexArray(VAO);
-for (unsigned int i = 0; i < 10; i++)
-{
-	glm::mat4 model;
-	model = glm::translate(model, cubePositions[i]);
-	float angle = 20.0f * i;
-	model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-	ourShader.setMat4("model", model);
+		// draw MANY cubes using a FOR loop
+		// ---------------------
+		glBindVertexArray(VAO);
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			glm::mat4 model;
+			model = glm::translate(model, cubePositions[i]);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-}
+			// COORDINATE PRACTICE 3: only cube index which are 3 times will rotate
+			if (i % 3 == 0) {
+				model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+			}
+			
+			ourShader.setMat4("model", model);
 
-// TRANSFORMATION PRACTICE 2: second transformation
-// ---------------------
-transform = glm::mat4(1.0f); // reset it to identity matrix
-transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
-float scaleAmount = sin(glfwGetTime());
-transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
-glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
-// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-ourShader.setFloat("texTrans", texTrans);
+		// TRANSFORMATION PRACTICE 2: second transformation
+		// ---------------------
+		transform = glm::mat4(1.0f); // reset it to identity matrix
+		transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+		float scaleAmount = sin(glfwGetTime());
+		transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
 
-// now with the uniform matrix being replaced with new transformations, draw it again.
-glDrawArrays(GL_TRIANGLES, 0, 36);
+		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
+		ourShader.setFloat("texTrans", texTrans);
 
-// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-// -------------------------------------------------------------------------------
-glfwSwapBuffers(window);
-glfwPollEvents();
+		// now with the uniform matrix being replaced with new transformations, draw it again.
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+		// -------------------------------------------------------------------------------
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 
 	// optional: de-allocate all resources once they've outlived their purpose:
