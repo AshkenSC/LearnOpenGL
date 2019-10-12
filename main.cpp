@@ -349,6 +349,7 @@ void processInput(GLFWwindow *window)
 	// camera movement control
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		yOffset += 0.01f;
+		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		yOffset -= 0.01f;
