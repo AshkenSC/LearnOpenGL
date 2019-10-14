@@ -245,11 +245,19 @@ int main()
 		// activate shader
 		ourShader.use();
 
+		// camera/view transformation
+		glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		ourShader.setMat4("view", view);
+
 		// create transformation matrices
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
 
-		glm::mat4 view = glm::mat4(1.0f);
+		// PS: the view matrix has been created in "camera/view transformation"
 		view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
 
 		glm::mat4 projection = glm::mat4(1.0f);
@@ -381,3 +389,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
+
+
+
+
+
+
