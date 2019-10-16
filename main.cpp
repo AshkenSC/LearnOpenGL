@@ -26,11 +26,6 @@ float xOffset = 0.0;
 float yOffset = 0.0;
 float zOffset = 0.0;
 
-// camera variables
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-// TODO
 
 int main()
 {
@@ -256,7 +251,11 @@ int main()
 		float radius = 10.0f;
 		float camX = sin(glfwGetTime() * 3.0f) * radius;
 		float camZ = cos(glfwGetTime() * 2.0f) * radius;
-		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		// camera variables
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		ourShader.setMat4("view", view);
 
 		// create transformation matrices
