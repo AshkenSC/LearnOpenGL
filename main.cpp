@@ -26,6 +26,10 @@ float xOffset = 0.0;
 float yOffset = 0.0;
 float zOffset = 0.0;
 
+// camera variables
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 int main()
 {
@@ -251,10 +255,6 @@ int main()
 		float radius = 10.0f;
 		float camX = sin(glfwGetTime() * 3.0f) * radius;
 		float camZ = cos(glfwGetTime() * 2.0f) * radius;
-		// camera variables
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		ourShader.setMat4("view", view);
 
@@ -359,7 +359,18 @@ void processInput(GLFWwindow *window)
 			texTrans = 0.0f;
 		cout << "transparency: " << texTrans << endl;
 	}
+
+	float cameraSpeed = 0.05f; // adjust accordingly
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	// camera movement control
+	/*
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		yOffset -= 0.01f;
 		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
@@ -384,6 +395,7 @@ void processInput(GLFWwindow *window)
 		zOffset -= 0.01f;
 		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
 	}
+	*/
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
