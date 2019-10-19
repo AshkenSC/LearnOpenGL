@@ -16,8 +16,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 900;
 
 // TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
 float texTrans = 0.5;
@@ -73,13 +73,6 @@ int main()
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	/*float vertices[] = {
-		// positions          // colors           // texture coords (MODIFIED IN PRACTICE 2)
-		0.5f,  0.5f, 0.0f,   1.0f, 0.2f, 0.2f,   1.0f, 1.0f, // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 0.8f, 0.2f,   1.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.2f, 0.9f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
-	};*/
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -253,8 +246,8 @@ int main()
 		// camera/view transformation
 		glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		float radius = 10.0f;
-		float camX = sin(glfwGetTime() * 3.0f) * radius;
-		float camZ = cos(glfwGetTime() * 2.0f) * radius;
+		float camX = sin(glfwGetTime() * 4.0f) * radius;
+		float camZ = cos(glfwGetTime() * 4.0f) * radius;
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		ourShader.setMat4("view", view);
 
@@ -369,33 +362,6 @@ void processInput(GLFWwindow *window)
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-	// camera movement control
-	/*
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		yOffset -= 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		yOffset += 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		xOffset += 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		xOffset -= 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		zOffset += 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		zOffset -= 0.01f;
-		printf("camera cooridnate: (%.2f, %.2f, %.2f)\n", xOffset, yOffset, zOffset);
-	}
-	*/
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
