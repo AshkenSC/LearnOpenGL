@@ -398,6 +398,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	// check if it is the first time that the window capture the focus
+	// to avoid "the hop" when entering the game for the first time
 	if (firstMouse)
 	{
 		lastX = xpos;
@@ -405,7 +407,31 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 		firstMouse = false;
 	}
 	
-	// TODO
+	// use offset of mouse location to calculate camera movement
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	// control the camera movement speed using "sensitivity"
+	float sensitivity = 0.05;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	// clamp the range of "pitch"
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
 }
 
 
