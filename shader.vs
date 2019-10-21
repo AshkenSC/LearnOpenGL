@@ -7,7 +7,7 @@ out vec3 ourColor;			// set an OUTPUT for fragment shader
 out vec2 TexCoord;
 
 uniform float xOffset;
-uniform mat4 transform;
+uniform mat4 transform; 
 // declare transformation matrices
 uniform mat4 model;
 uniform mat4 view;

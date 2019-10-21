@@ -1,7 +1,15 @@
 ﻿  main.cpp
-d:\project\opengl\learnopengl\main.cpp(256): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(257): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(312): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(50): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(267): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(268): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(323): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(405): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(406): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(411): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(412): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(413): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(414): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(417): warning C4305: 'initializing': truncation from 'double' to 'float'
 glfw3.lib(context.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(context.obj)' or at 'D:\Project\OpenGL\LearnOpenGL\Debug\glfw.pdb'; linking object as if no debug info
 glfw3.lib(init.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(init.obj)' or at 'D:\Project\OpenGL\LearnOpenGL\Debug\glfw.pdb'; linking object as if no debug info
 glfw3.lib(input.obj) : warning LNK4099: PDB 'glfw.pdb' was not found with 'glfw3.lib(input.obj)' or at 'D:\Project\OpenGL\LearnOpenGL\Debug\glfw.pdb'; linking object as if no debug info
