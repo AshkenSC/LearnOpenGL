@@ -269,24 +269,21 @@ int main()
 		// activate shader
 		ourShader.use();
 
-		// camera/view transformation
-		glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		float radius = 10.0f;
-		float camX = sin(glfwGetTime() * 4.0f) * radius;
-		float camZ = cos(glfwGetTime() * 4.0f) * radius;
 		// CAMERA: pass projection matrix to shader (note that in this case it could change every frame)
 		glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		ourShader.setMat4("projection", projection);
 		// CAMERA: camera/view transformation
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		//view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 		ourShader.setMat4("view", view);
+
+		// PERSONAL: camera movement solution
+		// PS: the view matrix has been created in "camera/view transformation"
+		//view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
 
 		// create transformation matrices
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-
-		// PS: the view matrix has been created in "camera/view transformation"
-		view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
 
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		// retrieve the matrix uniform locations
@@ -296,7 +293,6 @@ int main()
 		// TRANSFORMATION PRACTICE 2: first container
 		// ---------------------
 		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-		//transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 		// get matrix's uniform location and set matrix
 		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
@@ -306,20 +302,19 @@ int main()
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		ourShader.setMat4("projection", projection);
+		
 
 		// draw MANY cubes using a FOR loop
 		// ---------------------
 		glBindVertexArray(VAO);
 		for (unsigned int i = 0; i < 10; i++)
 		{
-			glm::mat4 model;
+			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
-
 			// COORDINATE PRACTICE 3: only cube index which are 3 times will rotate
 			if (i % 3 == 0) {
 				model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
-			}
-			
+			}	
 			ourShader.setMat4("model", model);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -327,6 +322,7 @@ int main()
 
 		// TRANSFORMATION PRACTICE 2: second transformation
 		// ---------------------
+		
 		transform = glm::mat4(1.0f); // reset it to identity matrix
 		transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
 		float scaleAmount = sin(glfwGetTime());
@@ -335,9 +331,10 @@ int main()
 
 		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
 		ourShader.setFloat("texTrans", texTrans);
-
+		
 		// now with the uniform matrix being replaced with new transformations, draw it again.
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -362,12 +359,10 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
-	// take deltaTime into control when calculating speed
-	float cameraSpeed = 2.5f * deltaTime;
-
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
+	// texture transparency control
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		texTrans += 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
@@ -383,7 +378,9 @@ void processInput(GLFWwindow *window)
 		cout << "transparency: " << texTrans << endl;
 	}
 
-	//float cameraSpeed = 0.05f; // adjust accordingly
+	// take deltaTime into control when calculating speed
+	float cameraSpeed = 2.5f * deltaTime;
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cameraPos += cameraSpeed * cameraFront;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -402,7 +399,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
-
 
 // CAMERA: glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------

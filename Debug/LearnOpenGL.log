@@ -1,14 +1,12 @@
 ﻿  main.cpp
 d:\project\opengl\learnopengl\main.cpp(52): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(275): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(276): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(335): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(417): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(328): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(410): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(411): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(416): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(417): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 d:\project\opengl\learnopengl\main.cpp(418): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(423): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(424): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(425): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(426): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\project\opengl\learnopengl\main.cpp(429): warning C4305: 'initializing': truncation from 'double' to 'float'
-d:\project\opengl\learnopengl\main.cpp(454): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(419): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(422): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\project\opengl\learnopengl\main.cpp(447): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
   LearnOpenGL.vcxproj -> D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe
