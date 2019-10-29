@@ -379,7 +379,8 @@ void processInput(GLFWwindow *window)
 	}
 
 	// take deltaTime into control when calculating speed
-	float cameraSpeed = 2.5f * deltaTime;
+	// CAMERA: deltaTime has to be commented to let camera move
+	float cameraSpeed = 0.01f /* * deltaTime*/;
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		cameraPos += cameraSpeed * cameraFront;
