@@ -16,6 +16,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void print_frameData();
 
 // window resolution settings
 const unsigned int SCR_WIDTH = 1600;
@@ -385,22 +386,25 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		cameraPos += cameraSpeed * cameraFront;
 		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
+		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		cameraPos -= cameraSpeed * cameraFront;
 		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
+		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
+		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
-
+		print_frameData();
 	}
 		
 }
@@ -463,6 +467,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 		fov = 1.0f;
 	if (fov >= 45.0f)
 		fov = 45.0f;
+}
+
+void print_frameData() {
+	cout << "currentFrame: " << glfwGetTime() << endl;
+	cout << "lastFrame: " << lastFrame << endl;
+	cout << "deltaTime: " << deltaTime << endl;
+	cout << endl;
 }
 
 
