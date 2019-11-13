@@ -381,7 +381,7 @@ void processInput(GLFWwindow *window)
 
 	// take deltaTime into control when calculating speed
 	// CAMERA: deltaTime has to be commented to let camera move
-	float cameraSpeed = 0.01f /* * deltaTime*/;
+	float cameraSpeed = 0.05f /* * deltaTime*/;
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		cameraPos += cameraSpeed * cameraFront;
@@ -437,7 +437,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	lastY = ypos;
 
 	// control the camera movement speed using "sensitivity"
-	float sensitivity = 0.05;
+	float sensitivity = 0.08;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
