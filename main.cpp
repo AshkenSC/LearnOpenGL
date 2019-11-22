@@ -224,14 +224,12 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// load image, create texture and generate mipmaps
 	data = stbi_load("resources/textures/awesomeface.png", &width, &height, &nrChannels, 0);
-	if (data)
-	{
+	if (data) {
 		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
-	else
-	{
+	else {
 		std::cout << "Failed to load texture" << std::endl;
 	}
 	stbi_image_free(data);
@@ -292,7 +290,7 @@ int main()
 		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
 
 		// TRANSFORMATION PRACTICE 2: first container
-		// ---------------------
+		// ------------------------------------------
 		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
 		// get matrix's uniform location and set matrix
 		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
@@ -306,10 +304,9 @@ int main()
 		
 
 		// draw MANY cubes using a FOR loop
-		// ---------------------
+		// --------------------------------
 		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++)
-		{
+		for (unsigned int i = 0; i < 10; i++) {
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
 			// COORDINATE PRACTICE 3: only cube index which are 3 times will rotate
@@ -322,7 +319,7 @@ int main()
 		}
 
 		// TRANSFORMATION PRACTICE 2: second transformation
-		// ---------------------
+		// ------------------------------------------------
 		
 		transform = glm::mat4(1.0f); // reset it to identity matrix
 		transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
@@ -369,14 +366,12 @@ void processInput(GLFWwindow *window)
 		texTrans += 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans >= 1.0f)
 			texTrans = 1.0f;
-		cout << "transparency: " << texTrans << endl;
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
 		texTrans -= 0.002f; // change this value accordingly (might be too slow or too fast based on system hardware)
 		if (texTrans <= 0.0f)
 			texTrans = 0.0f;
-		cout << "transparency: " << texTrans << endl;
 	}
 
 	// take deltaTime into control when calculating speed
