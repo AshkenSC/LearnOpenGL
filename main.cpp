@@ -380,30 +380,27 @@ void processInput(GLFWwindow *window)
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		cameraPos += cameraSpeed * cameraFront;
-		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		cameraPos -= cameraSpeed * cameraFront;
-		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
 		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
 		print_frameData();
 	}
 
 	// CAMERA EXERCISE 1: make sure the user stays on the ground
 	cameraPos.y = 0.0f; // keeps the user at the ground level (xz plane)
+	cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;	// add position watch
 		
 }
 
