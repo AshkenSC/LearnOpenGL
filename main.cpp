@@ -406,6 +406,9 @@ void processInput(GLFWwindow *window)
 		cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;
 		print_frameData();
 	}
+
+	// CAMERA EXERCISE 1: make sure the user stays on the ground
+	cameraPos.y = 0.0f; // keeps the user at the ground level (xz plane)
 		
 }
 
