@@ -57,6 +57,26 @@ public:
 		updateCameraVectors();
 	}
 
+	// Returns the view matrix calculated using Euler Angles and the LookAt Matrix
+	glm::mat4 GetViewMatrix()
+	{
+		return glm::lookAt(Position, Position + Front, Up);
+	}
+
+	// Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
+	void ProcessKeyboard(Camera_Movement direction, float deltaTime)
+	{
+		float velocity = MovementSpeed * deltaTime;
+		if (direction == FORWARD)
+			Position += Front * velocity;
+		if (direction == BACKWARD)
+			Position -= Front * velocity;
+		if (direction == LEFT)
+			Position -= Right * velocity;
+		if (direction == RIGHT)
+			Position += Right * velocity;
+	}
+
 private:
 	// Calculates the front vector from the Camera's (updated) Euler Angles
 	void updateCameraVectors() {
