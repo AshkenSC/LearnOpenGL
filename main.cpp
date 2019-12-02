@@ -285,8 +285,6 @@ int main()
 		//view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 		ourShader.setMat4("view", view);
 
-		// TODO
-
 		// PERSONAL: camera movement solution
 		// PS: the view matrix has been created in "camera/view transformation"
 		//view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
@@ -390,30 +388,28 @@ void processInput(GLFWwindow *window)
 	float cameraSpeed = 0.05f /* * deltaTime*/;
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(FORWARD, deltaTime);
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(LEFT, deltaTime);
 		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 		print_frameData();
 	}
-
-	// CAMERA EXERCISE 1: make sure the user stays on the ground
-	cameraPos.y = 0.0f; // keeps the user at the ground level (xz plane)
-	cout << cameraPos.x << " " << cameraPos.y << " " << cameraPos.z << endl;	// add position watch
 		
 }
+
+// TODO
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
