@@ -38,6 +38,7 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
+
 bool firstMouse = true;
 float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 float pitch = 0.0f;
@@ -409,8 +410,6 @@ void processInput(GLFWwindow *window)
 		
 }
 
-// TODO
-
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -435,29 +434,11 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	// use offset of mouse location to calculate camera movement
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;
-	lastX = xpos;
-	lastY = ypos;
-
-	// control the camera movement speed using "sensitivity"
-	float sensitivity = 0.08;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	// clamp the range of "pitch"
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
+	
+	camera.ProcessMouseMovement(xoffset, yoffset);
 }
+
+//TODO
 
 // CAMERA: glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
