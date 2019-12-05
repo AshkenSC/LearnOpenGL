@@ -17,8 +17,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void print_frameData();
-
+ 
 // window resolution settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 900;
@@ -390,22 +389,18 @@ void processInput(GLFWwindow *window)
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		camera.ProcessKeyboard(FORWARD, deltaTime);
-		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 		camera.ProcessKeyboard(BACKWARD, deltaTime);
-		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
 		camera.ProcessKeyboard(LEFT, deltaTime);
-		print_frameData();
 	}
 	
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		camera.ProcessKeyboard(RIGHT, deltaTime);
-		print_frameData();
 	}
 		
 }
@@ -443,15 +438,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
-}
-
-//TODO
-
-void print_frameData() {
-	cout << "currentFrame: " << glfwGetTime() << endl;
-	cout << "lastFrame: " << lastFrame << endl;
-	cout << "deltaTime: " << deltaTime << endl;
-	cout << endl;
 }
 
 
