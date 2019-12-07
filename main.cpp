@@ -17,7 +17,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
- 
+glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec3 worldUp);
+
 // window resolution settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 900;
@@ -440,6 +441,17 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	camera.ProcessMouseScroll(yoffset);
 }
 
-
+// CAMERA: EXERCISE 2
+// Custom implementation of the LookAt function
+glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec3 worldUp)
+{
+	// 1. Position = known
+	// 2. Calculate cameraDirection
+	glm::vec3 zaxis = glm::normalize(position - target);
+	// 3. Get positive right axis vector
+	glm::vec3 xaxis = glm::normalize(glm::cross(glm::normalize(worldUp), zaxis));
+	// 4. Calculate camera up vector
+	glm::vec3 yaxis = glm::cross(zaxis, xaxis);
+}
 
 
