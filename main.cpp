@@ -452,6 +452,17 @@ glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec
 	glm::vec3 xaxis = glm::normalize(glm::cross(glm::normalize(worldUp), zaxis));
 	// 4. Calculate camera up vector
 	glm::vec3 yaxis = glm::cross(zaxis, xaxis);
+
+	// Create translation and rotation matrix
+	// In glm we access elements as mat[col][row] due to column-major layout
+	glm::mat4 translation = glm::mat4(1.0f); // Identity matrix by default
+	translation[3][0] = -position.x; // Third column, first row
+	translation[3][1] = -position.y;
+	translation[3][2] = -position.z;
+
+	//TODO
+
+
 }
 
 
