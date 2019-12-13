@@ -1,1 +1,9 @@
-﻿  LearnOpenGL.vcxproj -> D:\Project\OpenGL\LearnOpenGL\Debug\LearnOpenGL.exe
+﻿  main.cpp
+d:\project\opengl\learnopengl\main.cpp(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(336): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(425): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(426): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(431): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(432): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(441): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\project\opengl\learnopengl\main.cpp(466): error C4716: 'calculate_lookAt_matrix': must return a value
