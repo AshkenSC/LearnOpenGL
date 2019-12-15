@@ -186,7 +186,7 @@ int main()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	// LIHGTS: define a lightVAO
+	// COLORS: define a lightVAO
 	unsigned int lightVAO;
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
@@ -195,9 +195,7 @@ int main()
 	// 设置灯立方体的顶点属性（对我们的灯来说仅仅只有位置数据）
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// LIGHTS_END
-
-	// TODO
+	// COLORS_END
 
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -262,6 +260,10 @@ int main()
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
 	ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+	// COLORS: set shader
+	ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+	ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+	// COLORS_END
 	// either set it manually like so:
 	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
 	// or set it via the texture class
