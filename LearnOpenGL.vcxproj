@@ -133,6 +133,7 @@
   <ItemGroup>
     <None Include="colors.fs" />
     <None Include="colors.vs" />
+    <None Include="lamp.fs" />
     <None Include="lamp.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
