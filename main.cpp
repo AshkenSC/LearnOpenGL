@@ -106,7 +106,8 @@ int main()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	Shader ourShader("shader.vs", "shader.fs");
+	Shader lightingShader("colors.vs", "colors.fs");
+	Shader lampShader("lamp.vs", "lamp.fs");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -259,18 +260,18 @@ int main()
 
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
-	ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+	lightingShader.use(); // don't forget to activate/use the shader before setting uniforms!
 	// COLORS: set shader
-	ourShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-	ourShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+	lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+	lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 	// COLORS_END
 	// either set it manually like so:
-	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
+	glUniform1i(glGetUniformLocation(lightingShader.ID, "texture1"), 0);
 	// or set it via the texture class
-	ourShader.setInt("texture2", 1);
+	lightingShader.setInt("texture2", 1);
 	// set an offset value to move the shape using vertex shader
 	float offset = 0.314f;
-	ourShader.setFloat("xOffset", offset);
+	lightingShader.setFloat("xOffset", offset);
 	
 
 	// render loop
@@ -293,15 +294,15 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
 		// activate shader
-		ourShader.use();
+		lightingShader.use();
 
 		// CAMERA: pass projection matrix to shader (note that in this case it could change every frame)
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		ourShader.setMat4("projection", projection);
+		lightingShader.setMat4("projection", projection);
 		// CAMERA: camera/view transformation
 		glm::mat4 view = camera.GetViewMatrix();
 		//view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-		ourShader.setMat4("view", view);
+		lightingShader.setMat4("view", view);
 
 		// PERSONAL: camera movement solution
 		// PS: the view matrix has been created in "camera/view transformation"
@@ -313,21 +314,21 @@ int main()
 
 		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		// retrieve the matrix uniform locations
-		unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-		unsigned int viewLoc = glGetUniformLocation(ourShader.ID, "view");
+		unsigned int modelLoc = glGetUniformLocation(lightingShader.ID, "model");
+		unsigned int viewLoc = glGetUniformLocation(lightingShader.ID, "view");
 
 		// TRANSFORMATION PRACTICE 2: first container
 		// ------------------------------------------
 		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
 		// get matrix's uniform location and set matrix
-		unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+		unsigned int transformLoc = glGetUniformLocation(lightingShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 		// pass them to the shaders (3 different ways)
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-		ourShader.setMat4("projection", projection);
+		lightingShader.setMat4("projection", projection);
 		
 
 		// draw MANY cubes using a FOR loop
@@ -340,7 +341,7 @@ int main()
 			if (i % 3 == 0) {
 				model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
 			}	
-			ourShader.setMat4("model", model);
+			lightingShader.setMat4("model", model);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
@@ -355,7 +356,7 @@ int main()
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
 
 		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-		ourShader.setFloat("texTrans", texTrans);
+		lightingShader.setFloat("texTrans", texTrans);
 		
 		// now with the uniform matrix being replaced with new transformations, draw it again.
 		glDrawArrays(GL_TRIANGLES, 0, 36);
