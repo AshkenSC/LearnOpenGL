@@ -56,6 +56,9 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
+// lighting
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 int main()
 {
 	// CAMERA: per-frame time logic
@@ -304,10 +307,6 @@ int main()
 		//view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 		lightingShader.setMat4("view", view);
 
-		// PERSONAL: camera movement solution
-		// PS: the view matrix has been created in "camera/view transformation"
-		//view = glm::translate(view, glm::vec3(0.0f + xOffset, 0.0f + yOffset, -3.0f + zOffset));
-
 		// create transformation matrices
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
@@ -361,6 +360,16 @@ int main()
 		// now with the uniform matrix being replaced with new transformations, draw it again.
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		
+		// COLORS: use lamp shader
+		// draw the lamp object
+		lampShader.use();
+		lampShader.setMat4("projection", projection);
+		lampShader.setMat4("view", view);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, lightPos);
+		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+		lampShader.setMat4("model", model);
+		// COLORS_END
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
