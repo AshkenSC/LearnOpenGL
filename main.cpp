@@ -296,15 +296,16 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		// activate shader
+		// activate lighting shader
 		lightingShader.use();
+		lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
 		// CAMERA: pass projection matrix to shader (note that in this case it could change every frame)
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		lightingShader.setMat4("projection", projection);
 		// CAMERA: camera/view transformation
 		glm::mat4 view = camera.GetViewMatrix();
-		//view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 		lightingShader.setMat4("view", view);
 
 		// create transformation matrices
@@ -369,6 +370,9 @@ int main()
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
 		lampShader.setMat4("model", model);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		// COLORS_END
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
