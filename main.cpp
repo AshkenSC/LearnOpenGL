@@ -23,30 +23,7 @@ glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 900;
 
-// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-float texTrans = 0.5;
-// COORDINATE PRACTICE 2: camera location offset
-float xOffset = 0.0;
-float yOffset = 0.0;
-float zOffset = 0.0;
-
-// camera variables
-/*
-DELETE
-
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-
-bool firstMouse = true;
-float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
-float pitch = 0.0f;
-float lastX = 800.0f / 2.0;
-float lastY = 600.0 / 2.0;
-float fov = 45.0f;
-*/
-
+// camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
@@ -58,6 +35,15 @@ float lastFrame = 0.0f;
 
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
+// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
+float texTrans = 0.5;
+// COORDINATE PRACTICE 2: camera location offset
+float xOffset = 0.0;
+float yOffset = 0.0;
+float zOffset = 0.0;
+
+// TODO
 
 int main()
 {
