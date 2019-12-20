@@ -36,23 +36,8 @@ float lastFrame = 0.0f;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-float texTrans = 0.5;
-// COORDINATE PRACTICE 2: camera location offset
-float xOffset = 0.0;
-float yOffset = 0.0;
-float zOffset = 0.0;
-
-// TODO
-
 int main()
 {
-	// CAMERA: per-frame time logic
-	// --------------------
-	float currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -73,7 +58,6 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
-	// CAMERA: call functions
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -89,9 +73,8 @@ int main()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-
-	// COORDINATE: configure global opengl state
-	glEnable(GL_DEPTH_TEST);
+	
+	// TODO
 
 	// build and compile our shader zprogram
 	// ------------------------------------
