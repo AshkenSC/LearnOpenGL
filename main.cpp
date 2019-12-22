@@ -154,8 +154,6 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// TODO
-
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -169,23 +167,18 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// bind textures on corresponding texture units
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
-
 		// activate lighting shader
 		lightingShader.use();
 		lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
 		lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-		// CAMERA: pass projection matrix to shader (note that in this case it could change every frame)
+		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		lightingShader.setMat4("projection", projection);
-		// CAMERA: camera/view transformation
 		glm::mat4 view = camera.GetViewMatrix();
+		lightingShader.setMat4("projection", projection);
 		lightingShader.setMat4("view", view);
+
+		// TODO
 
 		// create transformation matrices
 		glm::mat4 model = glm::mat4(1.0f);
