@@ -202,71 +202,6 @@ int main()
 		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		// TODO
-
-		glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		// retrieve the matrix uniform locations
-		unsigned int modelLoc = glGetUniformLocation(lightingShader.ID, "model");
-		unsigned int viewLoc = glGetUniformLocation(lightingShader.ID, "view");
-
-		// TRANSFORMATION PRACTICE 2: first container
-		// ------------------------------------------
-		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-		// get matrix's uniform location and set matrix
-		unsigned int transformLoc = glGetUniformLocation(lightingShader.ID, "transform");
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-
-		// pass them to the shaders (3 different ways)
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-		// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-		lightingShader.setMat4("projection", projection);
-		
-
-		// draw MANY cubes using a FOR loop
-		// --------------------------------
-		glBindVertexArray(VAO);
-		for (unsigned int i = 0; i < 10; i++) {
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			// COORDINATE PRACTICE 3: only cube index which are 3 times will rotate
-			if (i % 3 == 0) {
-				model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
-			}	
-			lightingShader.setMat4("model", model);
-
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-
-		// TRANSFORMATION PRACTICE 2: second transformation
-		// ------------------------------------------------
-		
-		transform = glm::mat4(1.0f); // reset it to identity matrix
-		transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
-		float scaleAmount = sin(glfwGetTime());
-		transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &transform[0][0]); // this time take the matrix value array's first element as its memory pointer value
-
-		// TEXTURE PRACTICE 3: set a uniform value to modify texture transparency
-		lightingShader.setFloat("texTrans", texTrans);
-		
-		// now with the uniform matrix being replaced with new transformations, draw it again.
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		
-		// COLORS: use lamp shader
-		// draw the lamp object
-		lampShader.use();
-		lampShader.setMat4("projection", projection);
-		lampShader.setMat4("view", view);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-		lampShader.setMat4("model", model);
-
-		glBindVertexArray(lightVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		// COLORS_END
-
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
@@ -275,9 +210,9 @@ int main()
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, &VAO);
+	glDeleteVertexArrays(1, &cubeVAO);
+	glDeleteVertexArrays(1, &lightVAO);
 	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
