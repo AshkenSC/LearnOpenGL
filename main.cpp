@@ -252,19 +252,19 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 // CAMERA: glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-	// check if it is the first time that the window capture the focus
-	// to avoid "the hop" when entering the game for the first time
 	if (firstMouse)
 	{
 		lastX = xpos;
 		lastY = ypos;
 		firstMouse = false;
 	}
-	
-	// use offset of mouse location to calculate camera movement
+
 	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;
-	
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+	lastX = xpos;
+	lastY = ypos;
+
 	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
