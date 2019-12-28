@@ -182,7 +182,6 @@ int main()
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
 
 		// world transformation
-		glm::mat4 model = glm::mat4(1.0f);
 		lightingShader.setMat4("model", model);
 
 		// render the cube
