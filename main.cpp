@@ -222,7 +222,6 @@ int main()
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();
-
 	return 0;
 }
 
