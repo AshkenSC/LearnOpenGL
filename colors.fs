@@ -11,6 +11,7 @@ uniform vec3 viewPos;
 
 void main()
 {
+	// BASIC LIGHTING PRACTICE 3
 	// ambient
 	float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * lightColor;
