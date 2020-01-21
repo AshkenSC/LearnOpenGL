@@ -131,8 +131,8 @@
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="colors.fs" />
-    <None Include="colors.vs" />
+    <None Include="materials.fs" />
+    <None Include="materials.vs" />
     <None Include="lamp.fs" />
     <None Include="lamp.vs" />
   </ItemGroup>
