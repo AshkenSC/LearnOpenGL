@@ -1,18 +1,28 @@
 #version 330 core
+out vec4 FragColor;
+
 struct Material {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
     float shininess;
 }; 
-// up TODO
 
-out vec4 FragColor;
+struct Light {
+    vec3 position;
 
-in vec3 LightingColor; 
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
 
-uniform vec3 objectColor;
+in vec3 FragPos;  
+in vec3 Normal;  
+  
+uniform vec3 viewPos;
 uniform Material material;
+uniform Light light;
+// TODO
 
 void main()
 {
