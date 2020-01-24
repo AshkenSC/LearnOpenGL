@@ -175,6 +175,13 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// be sure to activate shader when setting uniforms/drawing objects
+		lightingShader.use();
+		lightingShader.setVec3("light.position", lightPos);
+		lightingShader.setVec3("viewPos", camera.Position);
+
+		// TODO
+
 		// BASIC LIGHTING PRACTICE 1
 		// clear the colorbuffer
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
