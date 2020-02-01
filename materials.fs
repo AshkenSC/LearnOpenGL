@@ -10,7 +10,6 @@ struct Material {
 
 struct Light {
     vec3 position;
-
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -22,7 +21,6 @@ in vec3 Normal;
 uniform vec3 viewPos;
 uniform Material material;
 uniform Light light;
-// TODO
 
 void main()
 {
