@@ -43,10 +43,10 @@
     <None Include="lamp.fs">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="materials.fs">
+    <None Include="lighting_maps.fs">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="materials.vs">
+    <None Include="lighting_maps.vs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
